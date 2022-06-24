@@ -30,4 +30,4 @@ workflows:
       scripts:
         - name: HTTP notification
           script: |
-            curl http://hebadiaa.cf/backend/api/observe/notice/d1f74c66-6d41-3d8f-03c3-f1b7a6a46adb
+            curl https://hebadiaa.cf/backend/api/observe/notice/d1f74c66-6d41-3d8f-03c3-f1b7a6a46adb
