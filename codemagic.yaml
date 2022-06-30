@@ -1,82 +1,30 @@
 workflows:
-  ios-workflow:
-    name: SiteNative iOS without OneSignal
+  android-workflow:
+    name: SiteNative Android apk
     max_build_duration: 30
     environment:
       vars:
-        XCODE_WORKSPACE: "Runner.xcworkspace"
-        XCODE_SCHEME: "Runner"
-        APP_STORE_CONNECT_ISSUER_ID: e1d8f39a-2544-4310-a498-c16cdb9d7228
-        APP_STORE_CONNECT_KEY_IDENTIFIER: A74CB8R4U6
-        APP_STORE_CONNECT_PRIVATE_KEY: |-
-         -----BEGIN PRIVATE KEY-----
-         MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgcvXQLKGYiY09eEsE
-         iQ6S92uBxfRfJK5M2EnZ559z1QOgCgYIKoZIzj0DAQehRANCAATcAs1jftgT7PG7
-         RRwWGvn6ehClOpfoG+cJCGqFZs2RvIjW7bmAwpRP1VYp9eZNs85pW6u3yNjj+0gr
-         Y5WQ43QL
-         -----END PRIVATE KEY-----
-
-        CERTIFICATE_PRIVATE_KEY: |-
-         -----BEGIN RSA PRIVATE KEY-----
-         MIIEowIBAAKCAQB3ZDIRhp5rSIswjmdOBkOC/6P1kk3/SY7+s0bVCXFE0ZVo5I1Q
-         BAEdDjjpMrHQ9djgLg2kHlm8Z9zo98w6CQU/8aG71cKeygzkh3TjgNsnkGaRG6kL
-         M3iD0jtlRd4yq8aa+xjWNK4cI6C9caRIUn7VbVGu81r0dt2Y/HCuJi8sL3NRB43H
-         qFE1q7J1h4x3ZIzqcaEyVq14NRcuwJ9z9wKqhONv8G4dcNTnRexP54rPOlru6fHg
-         6QMEVvE/bL7L0ubsisTVrsNbkJcQneNfbwksmF2qqIGElsaET/9TLVz8QkkGNfL1
-         kIhAEOqdfHT23nhjqZJHbZUSZbIqjl2U6LizAgMBAAECggEAJp4EC+MtLqpiSyxk
-         gbpI8ABcOjw+ekqCtCOsz4+kUYww9aKnirAg5BMLmXJKTbqXkbuTsfgXMnet3rT4
-         G/V6+znfBHCZ6N6V2P1vc37kZCGy61C1FuhpHMpNZ+53dpBVRx/c4rxbbMKhZWVy
-         q+nzGHmpqBsS2mvwNWHB2LKFI5cqU2EXxbFL7KCyZk9/v8CBdQJXAyj5iQgLf0+l
-         H2skFDECMfcMTEJkrMqTzjTRcqwSbsc4xNHub+7nujRsa2fmZ4OcLRgxHWRr6vgA
-         105DjqNyghGQU5n2Xg+povYB6X3FmP48f6viYccRRITKFLnggNu4fcy/ieJNJHUH
-         +fKlsQKBgQDT/Bx2JxQ80ue3S41321KFFUt8Yu/NPTBpxS9ONcHhu+cTJiKJboi2
-         NMsZ31+TEdabukd4vTXzNmw8HE8TUDiud81wrtnvizyKgUqULIlC3LWIumFtA3N+
-         p1m9f5llJaMFombXJZzP5K1s9dMWGlbf6asgDHp0nY3ApsIwcg+q/wKBgQCQLlpH
-         omazSm+NnfAOYx0y7YWlNviVeesXvh1BgaPgkmLmNSmTZFAvUw82U+0Z+JhQq5G9
-         kKVslBoZrHMFEbX5kW70i3MBGykc60DoK2WPFj6NSCVuDO7ki3f2raM47/Zxdwl4
-         DfkOr0eIbqjInC+dXupbzDdkS5FOl5niUl+2TQKBgQCpfs5/BlYfH/9YRpexuvKr
-         KFC3/x+AOimomJpvbXo9dJGZdQduXawADAxM/pabsEqpL3OQLbGiauR116i+Z4k6
-         rt3b+GKXLvxUPnaULVv+0xxvW58km/rPzR1q8EiFYGeNzMFvy0ory8uC8Lc72AmY
-         dWx3bqLG9WbvICbqt3ihnwKBgBHDRCgTH+fywa+Gx65eE5jUnmRuU03HCWmRaHVL
-         jW77WefWoNqhvyc1amhdCpbqg4lcucXK7jZkQJrtHfZ/6hVnD25dR7vZJsWDTinM
-         PuTT7rzlKIdYXI4XiJ4BYlx/Y7My4R3DSu2+Nmfeiji81TjkGqdYj3JxxOMT1keF
-         snj5AoGBAIG8qXoKPUx7t8QS1EYEExf7l5ZIf7myDtCSuz4GC3oS1/AIEHzbwNfL
-         kNW7/lK0ROgObE4miX0GJ3p7pdqavqbnQmkxeQwSrbhAVWC7c9BJ5WlUlqzm+Ajj
-         uJp2bxQkPxirBFjndnimdFgesNzKbyYRlC4IZXtWwDLyqixEvOd2
-         -----END RSA PRIVATE KEY-----
-
-        BUNDLE_ID: "app.host1fire.com"
+        PACKAGE_NAME: "app.host1fire.com"
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
+      - name: Set up local.properties
         script: |
-          keychain initialize
-      - name: Fetch signing files
-        script: |
-          app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_STORE --create --log-api-calls --verbose
-      - name: Use system default keychain
-        script: |
-          keychain add-certificates
-      - name: Set up code signing settings on Xcode project
-        script: |
-          xcode-project use-profiles
+          echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - name: Get Flutter packages
         script: |
           cd . && flutter packages pub get
       - name: Install pods
         script: |
           find . -name "Podfile" -execdir pod install \;
-      - name: Flutter build ipa and automatic versioning
+      - name: Build APK with Flutter
         script: |
-          flutter build ipa --release \
-          --build-name=1.0.0 \
-          --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
-          --export-options-plist=/Users/builder/export_options.plist
+          cd . && flutter build apk --release --build-name=1.0.0 --build-number=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
     artifacts:
-      - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
       - flutter_drive.log
     publishing:
       scripts:
